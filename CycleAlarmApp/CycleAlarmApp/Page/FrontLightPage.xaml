@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="CycleAlarmApp.FrontLightPage">
+    <ContentPage.Content>
+        <Grid x:Name="BackgroundTheme" BackgroundColor="SkyBlue" Margin="0">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="50" />
+                <RowDefinition Height="100" />
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Label x:Name="TitleLabel" Grid.Row="1" HorizontalTextAlignment="Center" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="36" FontAttributes="None" TextColor="White">Enjoy Ride,
+Safety your Ride</Label>
+
+            <Frame Grid.ColumnSpan="3" BackgroundColor="White" Grid.Row="2" Margin="40" CornerRadius="50">
+                <Grid Padding="0" x:Name="mainMenu">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="20" />
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <Grid x:Name="listMenu" IsVisible="true" Padding="20" Grid.Row="1" Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                            <ColumnDefinition Width="1.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Front Light"></Button>
+                        <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Back Light"></Button>
+                        <Button Grid.Column="0" Grid.Row="2" Text="Battery"></Button>
+                        <Button Grid.Column="1" Grid.Row="2" Text="Settings"></Button>
+                    </Grid>
+                </Grid>
+            </Frame>
+        </Grid>
+    </ContentPage.Content>
+</ContentPage>
