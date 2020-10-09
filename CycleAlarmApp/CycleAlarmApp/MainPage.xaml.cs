@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Android.Content;
+using Android.Views;
+using CycleAlarmApp.Interface;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -16,11 +19,21 @@ namespace CycleAlarmApp
         public MainPage()
         {
             InitializeComponent();
+            DependencyService.Register<IMenuPage>();
         }
 
         private async void Start(object sender, EventArgs e)
         {
-            await Navigation.PushModalAsync(new MenuPage());
+            if(DependencyService.Get<IMenuPage>().Start())
+            {
+                MenuPage page = new MenuPage();
+                await Navigation.PushModalAsync(page);
+            }
+        }
+
+        private async void Setting(object sender, EventArgs e)
+        {
+            await Navigation.PushModalAsync(new SettingPage());
         }
     }
 }

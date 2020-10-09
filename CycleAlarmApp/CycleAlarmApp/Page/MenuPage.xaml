@@ -6,75 +6,18 @@
              mc:Ignorable="d"
              x:Class="CycleAlarmApp.MenuPage">
     <ContentPage.Content>
-        <Grid x:Name="BackgroundTheme" BackgroundColor="SkyBlue" Margin="0">
+        <Grid x:Name="BackgroundTheme" Padding="20, 20, 0, 0" BackgroundColor="Black" Margin="0">
             <Grid.RowDefinitions>
+                <RowDefinition Height="120" />
                 <RowDefinition Height="50" />
-                <RowDefinition Height="100" />
-                <RowDefinition Height="*" />
+                <RowDefinition Height="50" />
+                <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*"/>
-                <ColumnDefinition Width="300" />
-                <ColumnDefinition Width="1*" />
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
-            <Label x:Name="TitleLabel" Grid.Row="1" HorizontalTextAlignment="Center" Grid.ColumnSpan="3" HorizontalOptions="Center" VerticalOptions="Center" FontSize="36" FontAttributes="None" TextColor="White">Enjoy Ride,
-Safety your Ride</Label>
-
-            <Frame Grid.ColumnSpan="3" BackgroundColor="White" Grid.Row="2" Margin="40" CornerRadius="50">
-                <Grid Padding="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="20" />
-                        <RowDefinition Height="1*" />
-                    </Grid.RowDefinitions>
-                    <Grid IsVisible="true" Padding="20" Grid.Row="1" Margin="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="1*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="1.5*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="2" Text="Front Light" Clicked="ShowFrontLightMenu"></Button>
-                        <Button Grid.Column="0" Grid.Row="1" Grid.ColumnSpan="2" Text="Back Light" Clicked="ShowBackLightMenu"></Button>
-                        <Button Grid.Column="0" Grid.Row="2" Text="Battery" Clicked="ShowBatteryMenu"></Button>
-                        <Button Grid.Column="1" Grid.Row="2" Text="Settings" Clicked="ShowSettingMenu"></Button>
-                    </Grid>
-                    <Grid x:Name="settingMenu" IsVisible="false" Padding="20" Grid.Row="1" Margin="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="1*" />
-                            <RowDefinition Height="1*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-                        <Button Grid.Column="0" Grid.Row="0" Text="G-센서 설정"></Button>
-                        <Button Grid.Column="0" Grid.Row="1" Text="도난방지 설정"></Button>
-                        <Button Grid.Column="0" Grid.Row="2" Text=""></Button>
-                        <Button Grid.Column="0" Grid.Row="3" Text=""></Button>
-                    </Grid>
-                    <Grid x:Name="batteryMenu" IsVisible="false" Padding="20" Grid.Row="1" Margin="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="2*" />
-                            <RowDefinition Height="0.5*" />
-                            <RowDefinition Height="1*" />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="1*" />
-                            <ColumnDefinition Width="150" />
-                            <ColumnDefinition Width="1*" />
-                        </Grid.ColumnDefinitions>
-                        <Frame Grid.Column="0" Grid.Row="1"></Frame>
-                        <Button Grid.Column="1" Grid.Row="1">
-                            <Button.Text>절전모드 활성화</Button.Text>
-                        </Button>
-                        <Label Grid.Column="0" Grid.Row="2" Grid.ColumnSpan="3">절전모드 사용시 배터리 절약을 위해 일부 기능을 제약합니다.</Label>
-                    </Grid>
-                </Grid>
-            </Frame>
+            <Label x:Name="TimeLabel" Grid.Column="0" Grid.Row="0" FontSize="Header" TextColor="LightGray" Text="00:00 AM"></Label>
+            <Label x:Name="ElapsedTimeLabel" Grid.Column="0" Grid.Row="1" FontSize="Title" TextColor="LightGray" Text="0분"></Label>
         </Grid>
     </ContentPage.Content>
 </ContentPage>

@@ -1,5 +1,6 @@
 ﻿using Android.App;
 using Android.Bluetooth;
+using Android.Content;
 using Android.OS;
 using Android.Util;
 using Android.Widget;
@@ -17,10 +18,8 @@ using System.Text;
 namespace CycleAlarmApp.Droid.Controller
 {
     [Activity(Label = "Bluetooth")]
-    public class Bluetooth : IMenuPage, ISettingMenu
+    public class Bluetooth : Activity, IMenuPage, ISettingMenu
     {
-        private static Bluetooth Singleton = null;
-
         private readonly BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
 
         private static readonly UUID UUID = UUID.FromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -42,10 +41,15 @@ namespace CycleAlarmApp.Droid.Controller
             set;
         }
 
+        public override void OnCreate(Bundle savedInstanceState, PersistableBundle persistentState)
+        {
+            base.OnCreate(savedInstanceState, persistentState);
+
+            Window.SetFlags(Android.Views.WindowManagerFlags.KeepScreenOn, Android.Views.WindowManagerFlags.KeepScreenOn);
+        }
+
         public Bluetooth()
         {
-            Singleton = this;
-
             try
             {
                 if (Sensors == null)
@@ -64,18 +68,22 @@ namespace CycleAlarmApp.Droid.Controller
                 Log.Error("BLINK", "Bluetooth Error!", e);
             }
         }
-        public void Start()
+        public bool Start()
         {
             try
             {
                 if (BlinkDevices.Any())
                 {
-                    ShowToast($"BLINK 기기를 찾았습니다.");
                     BluetoothDevice device = BlinkDevices.First();
 
-                    Connect(adapter.GetRemoteDevice(device.Address));
+                    if(!Connect(adapter.GetRemoteDevice(device.Address)))
+                    {
+                        return false;
+                    }
 
                     Sensors.Start();
+                    
+                    return true;
                 }
                 else
                 {
@@ -88,6 +96,7 @@ namespace CycleAlarmApp.Droid.Controller
             {
                 Log.Error("BLINK", "Bluetooth Error!", e);
             }
+            return false;
         }
 
         public void Write(string str)
@@ -103,7 +112,7 @@ namespace CycleAlarmApp.Droid.Controller
             }
         }
 
-        private void Connect(BluetoothDevice device)
+        private bool Connect(BluetoothDevice device)
         {
             BluetoothSocket bluetoothSocket = null;
             try
@@ -114,6 +123,7 @@ namespace CycleAlarmApp.Droid.Controller
             {
                 Log.Error(Name, "create() failed", e);
                 ShowToast($"BLINK와의 연결에 실패했습니다.");
+                return false;
             }
             State = BluetoothState.Connecting;
 
@@ -133,12 +143,15 @@ namespace CycleAlarmApp.Droid.Controller
                 {
                     Log.Error(Name, $"unable to close() socket during connection failure.", e);
                     ShowToast($"BLINK와의 연결에 실패했습니다.");
+                    return false;
                 }
                 ConnectionFailed();
                 ShowToast($"BLINK와의 연결에 실패했습니다.");
+                return false;
             }
 
             Connected(bluetoothSocket);
+            return true;
         }
 
         private void ShowToast(string str, ToastLength length = ToastLength.Short)
@@ -210,11 +223,6 @@ namespace CycleAlarmApp.Droid.Controller
             State = BluetoothState.Listen;
         }
 
-        public void StartActivityInAndroid()
-        {
-            Start();
-        }
-
         public void SetThreshold(float threshold)
         {
             Sensors.AccelThreshold = threshold;
@@ -233,6 +241,16 @@ namespace CycleAlarmApp.Droid.Controller
         public float GetCenter()
         {
             return Sensors.Center;
+        }
+
+        public void SetBreak(float threshold)
+        {
+            Sensors.BreakThreshold = threshold;
+        }
+
+        public float GetBreak()
+        {
+            return Sensors.BreakThreshold;
         }
 
         class CallbackObject

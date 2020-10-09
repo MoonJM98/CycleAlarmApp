@@ -6,6 +6,6 @@ namespace CycleAlarmApp.Interface
 {
     public interface IMenuPage
     {
-        void StartActivityInAndroid();
+        bool Start();
     }
 }

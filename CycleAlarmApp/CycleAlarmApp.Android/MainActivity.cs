@@ -5,6 +5,7 @@ using Android.OS;
 using Android.Runtime;
 using CycleAlarmApp.Droid.Controller;
 using Java.Lang;
+using Xamarin.Forms.Internals;
 
 namespace CycleAlarmApp.Droid
 {
@@ -22,6 +23,9 @@ namespace CycleAlarmApp.Droid
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            Window.SetFlags(Android.Views.WindowManagerFlags.KeepScreenOn, Android.Views.WindowManagerFlags.KeepScreenOn);
+            Window.SetFlags(Android.Views.WindowManagerFlags.Fullscreen, Android.Views.WindowManagerFlags.Fullscreen);
 
             LoadApplication(new App());
         }

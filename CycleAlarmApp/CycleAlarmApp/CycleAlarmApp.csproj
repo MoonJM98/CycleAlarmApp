@@ -22,14 +22,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Page\BatteryMenuPage.xaml.cs">
-      <DependentUpon>BatteryMenuPage.xaml</DependentUpon>
-    </Compile>
     <Compile Update="Page\SettingPage.xaml.cs">
       <DependentUpon>SettingPage.xaml</DependentUpon>
-    </Compile>
-    <Compile Update="Page\FrontLightPage.xaml.cs">
-      <DependentUpon>FrontLightPage.xaml</DependentUpon>
     </Compile>
   </ItemGroup>
 

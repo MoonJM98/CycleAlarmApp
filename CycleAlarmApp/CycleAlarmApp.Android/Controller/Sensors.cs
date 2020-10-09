@@ -3,6 +3,7 @@ using Android.Util;
 using Java.IO;
 using Java.Lang;
 using System;
+using System.Diagnostics.Tracing;
 using Xamarin.Essentials;
 using Xamarin.Forms;
 
@@ -15,8 +16,11 @@ namespace CycleAlarmApp.Droid.Controller
 
         public float Center = 0f;
         public float AccelThreshold = 0.1f;
-        bool left = false;
-        bool right = false;
+        public float BreakThreshold = 1f;
+        public LightState State = LightState.None;
+        public bool IsBreak = false;
+
+        public enum LightState { Left = -1, None = 0, Right = 1 };
 
         // GyroscopeData GyroscopeData;
         AccelerometerData AccelerometerData;
@@ -73,25 +77,35 @@ namespace CycleAlarmApp.Droid.Controller
                         //Log.Debug("BLINK", $"Gyros = {GyroscopeData.AngularVelocity.X}, {GyroscopeData.AngularVelocity.Y}, {GyroscopeData.AngularVelocity.Z}");
                     });
                 }
-                if (!left && AccelerometerData.Acceleration.X > AccelThreshold + Center)
+                if(!IsBreak && AccelerometerData.Acceleration.Z > BreakThreshold)
                 {
-                    left = true;
-                    Bluetooth.Write("led0 on");
+                    IsBreak = true;
+                    Bluetooth.Write("BREAK ON");
                 }
-                else if (left && AccelerometerData.Acceleration.X < AccelThreshold + Center)
+                else if (IsBreak && AccelerometerData.Acceleration.Z < BreakThreshold)
                 {
-                    left = false;
-                    Bluetooth.Write("led0 off");
+                    IsBreak = false;
+                    Bluetooth.Write("BREAK OFF");
                 }
-                else if (!right && AccelerometerData.Acceleration.X < -AccelThreshold + Center)
+                else if (State != LightState.Left && AccelerometerData.Acceleration.X > AccelThreshold + Center)
                 {
-                    right = true;
-                    Bluetooth.Write("led1 on");
+                    State = LightState.Left;
+                    Bluetooth.Write("LEFT");
                 }
-                else if (right && AccelerometerData.Acceleration.X > -AccelThreshold + Center)
+                else if (State == LightState.Left && AccelerometerData.Acceleration.X < AccelThreshold + Center)
                 {
-                    right = false;
-                    Bluetooth.Write("led1 off");
+                    State = LightState.None;
+                    Bluetooth.Write("NONE");
+                }
+                else if (State != LightState.Right && AccelerometerData.Acceleration.X < -AccelThreshold + Center)
+                {
+                    State = LightState.Right;
+                    Bluetooth.Write("RIGHT");
+                }
+                else if (State == LightState.Right && AccelerometerData.Acceleration.X > -AccelThreshold + Center)
+                {
+                    State = LightState.None;
+                    Bluetooth.Write("NONE");
                 }
             }
         }

@@ -8,7 +8,9 @@ namespace CycleAlarmApp.Interface
     {
         void SetThreshold(float threshold);
         void SetCenter(float center);
+        void SetBreak(float center);
         float GetThreshold();
         float GetCenter();
+        float GetBreak();
     }
 }

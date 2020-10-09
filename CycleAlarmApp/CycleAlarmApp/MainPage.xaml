@@ -8,20 +8,23 @@
 
     <Grid x:Name="BackgroundTheme" Padding="30" BackgroundColor="SkyBlue">
         <Grid.RowDefinitions>
-            <RowDefinition Height="100" />
-            <RowDefinition Height="70" />
-            <RowDefinition Height="70" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="50" />
             <RowDefinition Height="60" />
-            <RowDefinition Height="200" />
+            <RowDefinition Height="40" />
+            <RowDefinition Height="2*" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="10" />
+            <RowDefinition Height="60" />
+            <RowDefinition Height="100" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="1*"/>
             <ColumnDefinition Width="300" />
             <ColumnDefinition Width="1*" />
         </Grid.ColumnDefinitions>
-        <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" FontSize="36" FontAttributes="Bold" TextColor="White">R.S.R</Label>
+        <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" FontSize="40" FontAttributes="Bold" TextColor="White">R.S.R</Label>
         <Label Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" FontSize="26" FontAttributes="None" TextColor="White">Road Safety for Riders</Label>
         <Button Grid.Row="4" Grid.Column="1" Margin="50, 0, 50, 0" CornerRadius="30" Clicked="Start" Text="Let's Start"></Button>
+        <Button Grid.Row="6" Grid.Column="1" Margin="50, 0, 50, 0" CornerRadius="30" Clicked="Setting" Text="SETTINGS"></Button>
     </Grid>
 </ContentPage>
