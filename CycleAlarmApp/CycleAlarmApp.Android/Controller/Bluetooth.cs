@@ -20,6 +20,7 @@ namespace CycleAlarmApp.Droid.Controller
     [Activity(Label = "Bluetooth")]
     public class Bluetooth : Activity, IMenuPage, ISettingMenu
     {
+        public static Bluetooth Singleton = null;
         private readonly BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
 
         private static readonly UUID UUID = UUID.FromString("00001101-0000-1000-8000-00805f9b34fb");
@@ -29,6 +30,7 @@ namespace CycleAlarmApp.Droid.Controller
         public Stream OutStream;
 
         private Sensors Sensors;
+        public BluetoothSocket Socket = null;
 
         private IEnumerable<BluetoothDevice> BlinkDevices => from d in adapter.BondedDevices where d.Name == "BLINK" select d;
 
@@ -50,6 +52,7 @@ namespace CycleAlarmApp.Droid.Controller
 
         public Bluetooth()
         {
+            Singleton = this;
             try
             {
                 if (Sensors == null)
@@ -110,6 +113,14 @@ namespace CycleAlarmApp.Droid.Controller
             {
                 Log.Error(Name, "Exception during write", e);
             }
+            catch (NullReferenceException e)
+            {
+                Log.Error(Name, "NullReferenceException", e);
+            }
+            catch (System.Exception e)
+            {
+                Log.Error(Name, "Exception", e);
+            }
         }
 
         private bool Connect(BluetoothDevice device)
@@ -162,6 +173,8 @@ namespace CycleAlarmApp.Droid.Controller
         private void Connected(BluetoothSocket bluetoothSocket)
         {
             Log.Debug(Name, $"create ConnectedThread");
+
+            Socket = bluetoothSocket;
 
             try
             {
@@ -226,11 +239,13 @@ namespace CycleAlarmApp.Droid.Controller
         public void SetThreshold(float threshold)
         {
             Sensors.AccelThreshold = threshold;
+            Log.Debug(Name, $"Set AccelThreshold to {threshold}");
         }
 
         public void SetCenter(float center)
         {
             Sensors.Center = center;
+            Log.Debug(Name, $"Set Center to {center}");
         }
 
         public float GetThreshold()
@@ -246,6 +261,7 @@ namespace CycleAlarmApp.Droid.Controller
         public void SetBreak(float threshold)
         {
             Sensors.BreakThreshold = threshold;
+            Log.Debug(Name, $"Set Break to {threshold}");
         }
 
         public float GetBreak()

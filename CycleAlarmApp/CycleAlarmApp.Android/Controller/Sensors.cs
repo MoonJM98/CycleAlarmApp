@@ -14,9 +14,9 @@ namespace CycleAlarmApp.Droid.Controller
         SensorSpeed speed = SensorSpeed.UI;
         Bluetooth Bluetooth;
 
-        public float Center = 0f;
-        public float AccelThreshold = 0.1f;
-        public float BreakThreshold = 1f;
+        public static float Center = 0f;
+        public static float AccelThreshold = 0.1f;
+        public static float BreakThreshold = 2.5f;
         public LightState State = LightState.None;
         public bool IsBreak = false;
 
@@ -69,43 +69,43 @@ namespace CycleAlarmApp.Droid.Controller
             {
                 Thread.Sleep(100);
                 //if (AccelerometerData != null && GyroscopeData != null)
-                if (AccelerometerData != null)
-                {
-                    Application.Current.Dispatcher.BeginInvokeOnMainThread(() =>
-                    {
-                        Log.Debug("BLINK", $"Accel = {AccelerometerData.Acceleration.X}, {AccelerometerData.Acceleration.Y}, {AccelerometerData.Acceleration.Z}");
-                        //Log.Debug("BLINK", $"Gyros = {GyroscopeData.AngularVelocity.X}, {GyroscopeData.AngularVelocity.Y}, {GyroscopeData.AngularVelocity.Z}");
-                    });
-                }
+                if (AccelerometerData == null) return;
+
                 if(!IsBreak && AccelerometerData.Acceleration.Z > BreakThreshold)
                 {
                     IsBreak = true;
                     Bluetooth.Write("BREAK ON");
+                    Log.Debug("BLINK", $"BREAK ON SENT!, AccelZ: {AccelerometerData.Acceleration.Z}, Threshold: {BreakThreshold}");
                 }
                 else if (IsBreak && AccelerometerData.Acceleration.Z < BreakThreshold)
                 {
                     IsBreak = false;
                     Bluetooth.Write("BREAK OFF");
+                    Log.Debug("BLINK", $"BREAK OFF SENT!, AccelZ: {AccelerometerData.Acceleration.Z}, Threshold: {BreakThreshold}");
                 }
-                else if (State != LightState.Left && AccelerometerData.Acceleration.X > AccelThreshold + Center)
+                else if (State != LightState.Left && AccelerometerData.Acceleration.X > AccelThreshold - Center)
                 {
                     State = LightState.Left;
                     Bluetooth.Write("LEFT");
+                    Log.Debug("BLINK", $"LEFT SENT!, AccelX: {AccelerometerData.Acceleration.X}, Threshold: {AccelThreshold - Center}");
                 }
-                else if (State == LightState.Left && AccelerometerData.Acceleration.X < AccelThreshold + Center)
+                else if (State == LightState.Left && AccelerometerData.Acceleration.X < AccelThreshold - Center)
                 {
                     State = LightState.None;
                     Bluetooth.Write("NONE");
+                    Log.Debug("BLINK", $"NONE SENT!, AccelX: {AccelerometerData.Acceleration.X}, Threshold: {AccelThreshold - Center}");
                 }
-                else if (State != LightState.Right && AccelerometerData.Acceleration.X < -AccelThreshold + Center)
+                else if (State != LightState.Right && AccelerometerData.Acceleration.X < -AccelThreshold - Center) 
                 {
                     State = LightState.Right;
                     Bluetooth.Write("RIGHT");
+                    Log.Debug("BLINK", $"RIGHT SENT!, AccelX: {AccelerometerData.Acceleration.X}, Threshold: {-AccelThreshold - Center}");
                 }
-                else if (State == LightState.Right && AccelerometerData.Acceleration.X > -AccelThreshold + Center)
+                else if (State == LightState.Right && AccelerometerData.Acceleration.X > -AccelThreshold - Center)
                 {
                     State = LightState.None;
                     Bluetooth.Write("NONE");
+                    Log.Debug("BLINK", $"NONE SENT!, AccelX: {AccelerometerData.Acceleration.X}, Threshold: {-AccelThreshold - Center}");
                 }
             }
         }

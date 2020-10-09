@@ -35,5 +35,18 @@ namespace CycleAlarmApp.Droid
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
         }
+
+        public override void FinishAndRemoveTask()
+        {
+            base.FinishAndRemoveTask();
+
+            if(Bluetooth.Singleton != null && Bluetooth.Singleton.Socket != null)
+            {
+                try
+                {
+                    Bluetooth.Singleton.Socket.Close();
+                } catch { }
+            }
+        }
     }
 }

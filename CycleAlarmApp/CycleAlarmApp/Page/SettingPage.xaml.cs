@@ -23,6 +23,7 @@ namespace CycleAlarmApp
 
             ThresholdVal.Value = menu.GetThreshold();
             CenterVal.Value = menu.GetCenter();
+            BreakVal.Value = menu.GetBreak();
         }
 
         private void CenterChanged(object sender, ValueChangedEventArgs e)
@@ -40,6 +41,13 @@ namespace CycleAlarmApp
         {
             menu.SetBreak((float)BreakVal.Value);
             BreakLabel.Text = ((float)BreakVal.Value).ToString();
+        }
+
+        private void ResetValues(object sender, EventArgs e)
+        {
+            CenterVal.Value = 0f;
+            ThresholdVal.Value = 0.1f;
+            BreakVal.Value = 2.5f;
         }
     }
 }
