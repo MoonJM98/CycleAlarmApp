@@ -4,27 +4,30 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="CycleAlarmApp.MainPage">
+             x:Class="BLINK.MainPage">
 
-    <Grid x:Name="BackgroundTheme" Padding="30" BackgroundColor="SkyBlue">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="50" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="40" />
-            <RowDefinition Height="2*" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="10" />
-            <RowDefinition Height="60" />
-            <RowDefinition Height="100" />
-        </Grid.RowDefinitions>
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="1*"/>
-            <ColumnDefinition Width="300" />
-            <ColumnDefinition Width="1*" />
-        </Grid.ColumnDefinitions>
-        <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" FontSize="40" FontAttributes="Bold" TextColor="White">R.S.R</Label>
-        <Label Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" FontSize="26" FontAttributes="None" TextColor="White">Road Safety for Riders</Label>
-        <Button Grid.Row="4" Grid.Column="1" Margin="50, 0, 50, 0" CornerRadius="30" Clicked="Start" Text="Let's Start"></Button>
-        <Button Grid.Row="6" Grid.Column="1" Margin="50, 0, 50, 0" CornerRadius="30" Clicked="Setting" Text="SETTINGS"></Button>
-    </Grid>
+    <AbsoluteLayout>
+        <Image AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" Source="drawable/background" Aspect="AspectFill"/>
+        <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1, 1, 1, 1" x:Name="BackgroundTheme" Padding="30">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="100" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="40" />
+                <RowDefinition Height="2*" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="10" />
+                <RowDefinition Height="60" />
+                <RowDefinition Height="100" />
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="1*"/>
+                <ColumnDefinition Width="300" />
+                <ColumnDefinition Width="1*" />
+            </Grid.ColumnDefinitions>
+            <Label Grid.Row="1" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" FontSize="40" FontAttributes="Bold" TextColor="White">BLINK</Label>
+            <Label Grid.Row="2" Grid.ColumnSpan="3" HorizontalOptions="Start" VerticalOptions="Center" FontSize="26" FontAttributes="Italic"  TextColor="White">Road Safety System for Riders</Label>
+            <Button Grid.Row="4" Grid.Column="1" Margin="50, 0, 50, 0" CornerRadius="30" Clicked="Start" Text="Let's Start"></Button>
+            <Button Grid.Row="6" Grid.Column="1" Margin="50, 0, 50, 0" CornerRadius="30" Clicked="Setting" Text="SETTINGS"></Button>
+        </Grid>
+    </AbsoluteLayout>
 </ContentPage>

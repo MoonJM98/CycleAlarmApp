@@ -4,48 +4,51 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="CycleAlarmApp.SettingPage">
+             x:Class="BLINK.SettingPage">
     <ContentPage.Content>
-        <Grid Padding="30" x:Name="BackgroundTheme" BackgroundColor="SkyBlue" Margin="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="50" />
-                <RowDefinition Height="60" />
-                <RowDefinition Height="40" />
-                <RowDefinition Height="2*" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="1*" />
-            </Grid.ColumnDefinitions>
-            <Label Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" FontSize="40" FontAttributes="Bold" TextColor="White">R.S.R</Label>
-            <Label Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="26" FontAttributes="None" TextColor="White">Road Safety for Riders</Label>
-            <Frame Grid.Column="0" BackgroundColor="White" Grid.Row="3" Margin="10" CornerRadius="50">
-                <Grid x:Name="settingMenu" Grid.Row="1" Margin="0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                        <RowDefinition Height="1*" />
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="1*" />
-                    </Grid.ColumnDefinitions>
-                    <Label HorizontalTextAlignment="Center" FontSize="Large" Grid.Column="0" Grid.Row="0" Text="방향등 임계값 설정"></Label>
-                    <Slider x:Name="ThresholdVal" Grid.Column="0" Grid.Row="1" Minimum="0" Value="0.1" Maximum="0.6" ValueChanged="ThresholdChanged"></Slider>
-                    <Label x:Name="ThresholdLabel" HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="2" Text="0.1"></Label>
-                    <Label HorizontalTextAlignment="Center" FontSize="Large" Grid.Column="0" Grid.Row="3" Text="방향등 중앙 설정"></Label>
-                    <Slider x:Name="CenterVal" Grid.Column="0" Grid.Row="4" Minimum="-0.3" Value="0" Maximum="0.3" ValueChanged="CenterChanged"></Slider>
-                    <Label x:Name="CenterLabel" HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="5" Text="0"></Label>
-                    <Label HorizontalTextAlignment="Center" FontSize="Large" Grid.Column="0" Grid.Row="6" Text="정지등 설정"></Label>
-                    <Slider x:Name="BreakVal" Grid.Column="0" Grid.Row="7" Minimum="0" Value="2.5" Maximum="5" ValueChanged="BreakChanged"></Slider>
-                    <Label x:Name="BreakLabel" HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="8" Text="2.5"></Label>
-                    <Button Grid.Row="9" Margin="50, 0, 50, 0" Padding="0" CornerRadius="15" Clicked="ResetValues" Text="초기화"></Button>
-                </Grid>
-            </Frame>
-        </Grid>
+        <AbsoluteLayout>
+            <Image AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" Source="drawable/background" Aspect="AspectFill"/>
+            <Grid AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1, 1, 1, 1" Padding="30" x:Name="BackgroundTheme" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100" />
+                    <RowDefinition Height="60" />
+                    <RowDefinition Height="40" />
+                    <RowDefinition Height="2*" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="1*" />
+                </Grid.ColumnDefinitions>
+                <Label Grid.Row="1" HorizontalOptions="Start" VerticalOptions="Center" FontSize="40" FontAttributes="Bold" TextColor="White">BLINK</Label>
+                <Label Grid.Row="2" HorizontalOptions="Start" VerticalOptions="Center" FontSize="26" FontAttributes="Italic" TextColor="White">Road Safety System for Riders</Label>
+                <Frame Grid.Column="0" Grid.Row="3" Margin="10" CornerRadius="50">
+                    <Grid x:Name="settingMenu" Grid.Row="1" Margin="0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                            <RowDefinition Height="1*" />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="1*" />
+                        </Grid.ColumnDefinitions>
+                        <Label HorizontalTextAlignment="Center" FontSize="Large" Grid.Column="0" Grid.Row="0" Text="방향등 임계값 설정" TextColor="#000000"></Label>
+                        <Slider x:Name="TurnThresholdValue" Grid.Column="0" Grid.Row="1" Minimum="0" Value="0.1" Maximum="0.6" ValueChanged="TurnThresholdChanged"></Slider>
+                        <Label x:Name="TurnThresholdLabel" HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="2" Text="0.1"></Label>
+                        <Label HorizontalTextAlignment="Center" FontSize="Large" Grid.Column="0" Grid.Row="3" Text="방향등 중앙 설정" TextColor="#000000"></Label>
+                        <Slider x:Name="CenterPointValue" Grid.Column="0" Grid.Row="4" Minimum="-0.3" Value="0" Maximum="0.3" ValueChanged="CenterPointChanged"></Slider>
+                        <Label x:Name="CenterPointLabel" HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="5" Text="0"></Label>
+                        <Label HorizontalTextAlignment="Center" FontSize="Large" Grid.Column="0" Grid.Row="6" Text="정지등 설정" TextColor="#000000"></Label>
+                        <Slider x:Name="AccelThresholdValue" Grid.Column="0" Grid.Row="7" Minimum="0" Value="2.5" Maximum="5" ValueChanged="AccelThresholdChanged"></Slider>
+                        <Label x:Name="AccelThresholdLabel" HorizontalTextAlignment="Center" Grid.Column="0" Grid.Row="8" Text="2.5"></Label>
+                        <Button Grid.Row="9" Margin="50, 0, 50, 0" Padding="0" CornerRadius="15" Clicked="ResetValues" Text="초기화"></Button>
+                    </Grid>
+                </Frame>
+            </Grid>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

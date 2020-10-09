@@ -1,87 +1,78 @@
-﻿using CycleAlarmApp.Interface;
+﻿using Android.Util;
+using BLINK.Interface;
 using Java.Lang;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
+using System.Numerics;
 using System.Text;
 using System.Threading.Tasks;
-
+using Xamarin.Essentials;
 using Xamarin.Forms;
+using Xamarin.Forms.Maps;
 using Xamarin.Forms.Xaml;
 
-namespace CycleAlarmApp
+namespace BLINK
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class MenuPage : ContentPage
     {
+        public static Xamarin.Forms.Maps.Map Map;
+
+        public static double Degree = 0d;
+
         Thread timeRefreshThread;
-        Thread screenRefreshThread;
+        IMapPage mapPage;
 
         public MenuPage()
         {
             InitializeComponent();
 
+            DependencyService.Register<IMapPage>();
+
+            mapPage = DependencyService.Get<IMapPage>();
+
             Disappearing += Closing;
 
             timeRefreshThread = new Thread(TimeRefresh);
-            screenRefreshThread = new Thread(screenRefresh);
 
             timeRefreshThread.Start();
-            screenRefreshThread.Start();
+
+            Map = map;
         }
 
         private void TimeRefresh()
         {
             Stopwatch sw = new Stopwatch();
             sw.Start();
-            while(true)
-            {
-                App.Current.Dispatcher.BeginInvokeOnMainThread(() => {
-                    TimeLabel.Text = $"{DateTime.Now:tt h:mm}";
-                    ElapsedTimeLabel.Text = sw.Elapsed.Hours > 0 ? $"{sw.Elapsed.Hours}시간 {sw.Elapsed.Minutes}분" : $"{sw.Elapsed.Minutes}분";
-                });
-                Thread.Sleep(1000);
-            }
-        }
-        private void screenRefresh()
-        {
+
+            map.HasZoomEnabled = false;
+            map.HasScrollEnabled = false;
+            map.IsShowingUser = true;
+
+            DateTime StartTime = DateTime.Now;
+            DateTime LastTime = DateTime.Now;
+            double totalDistance = 0;
+            double totalSpeed = 0;
+            Location prevLocation = null;
+
             while (true)
             {
-                int x = 20;
-                int y = 20;
-                for(; x <= 200; x++)
-                {
-                    App.Current.Dispatcher.BeginInvokeOnMainThread(() =>
-                        BackgroundTheme.Padding = new Thickness(x, y, 0, 0)
-                    );
-                    Thread.Sleep(60000);
-                }
-
-                for (; y <= 200; y++)
-                {
-                    App.Current.Dispatcher.BeginInvokeOnMainThread(() =>
-                        BackgroundTheme.Padding = new Thickness(x, y, 0, 0)
-                    );
-                    Thread.Sleep(60000);
-                }
-
-                for (; x > 0; x--)
-                {
-                    App.Current.Dispatcher.BeginInvokeOnMainThread(() =>
-                        BackgroundTheme.Padding = new Thickness(x, y, 0, 0)
-                    );
-                    Thread.Sleep(60000);
-                }
-
-                for (; y > 0; y--)
-                {
-                    App.Current.Dispatcher.BeginInvokeOnMainThread(() =>
-                        BackgroundTheme.Padding = new Thickness(x, y, 0, 0)
-                    );
-                    Thread.Sleep(60000);
-                }
+                Location loc = mapPage.GetLocation().GetAwaiter().GetResult();
+                if(prevLocation != null) totalDistance += loc.CalculateDistance(prevLocation, DistanceUnits.Kilometers);
+                DateTime now = DateTime.Now;
+                totalSpeed += (now - LastTime).TotalHours * (loc.Speed ?? 0);
+                double avgSpeed = totalSpeed / (now - StartTime).TotalHours;
+                App.Current.Dispatcher.BeginInvokeOnMainThread(() => {
+                    SpeedLabel.Text = $"속도: {loc.Speed ?? 0:0.##}km/h, 평균: {avgSpeed:0.##}km/h, 거리: {totalDistance:0.##}km";
+                    TimeLabel.Text = $"현재: {DateTime.Now:tt h:mm}, 경과: " + (sw.Elapsed.Hours > 0 ? $"{sw.Elapsed.Hours}시간 {sw.Elapsed.Minutes}분" : $"{sw.Elapsed.Minutes}분");
+                    map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(loc.Latitude, loc.Longitude), Distance.FromMeters(100)));
+                    map.RotateTo(Degree);
+                });
+                prevLocation = loc;
+                Thread.Sleep(1000);
             }
         }
 
@@ -90,11 +81,9 @@ namespace CycleAlarmApp
             try
             {
                 timeRefreshThread.Dispose();
-            } catch { }
-            try
-            {
-                screenRefreshThread.Dispose();
-            } catch { }
+            }
+            catch { }
+            App.Current.Quit();
         }
     }
 }

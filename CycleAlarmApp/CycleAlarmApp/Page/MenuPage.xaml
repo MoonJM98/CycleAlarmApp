@@ -3,21 +3,24 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:maps="clr-namespace:Xamarin.Forms.Maps;assembly=Xamarin.Forms.Maps"
              mc:Ignorable="d"
-             x:Class="CycleAlarmApp.MenuPage">
+             x:Class="BLINK.MenuPage">
     <ContentPage.Content>
-        <Grid x:Name="BackgroundTheme" Padding="20, 20, 0, 0" BackgroundColor="Black" Margin="0">
-            <Grid.RowDefinitions>
-                <RowDefinition Height="120" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-                <RowDefinition Height="50" />
-            </Grid.RowDefinitions>
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-            <Label x:Name="TimeLabel" Grid.Column="0" Grid.Row="0" FontSize="Header" TextColor="LightGray" Text="00:00 AM"></Label>
-            <Label x:Name="ElapsedTimeLabel" Grid.Column="0" Grid.Row="1" FontSize="Title" TextColor="LightGray" Text="0분"></Label>
-        </Grid>
+        <AbsoluteLayout>
+            <maps:Map x:Name="map"  AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1, 1, 1, 1" />
+            <Grid x:Name="BackgroundTheme" AbsoluteLayout.LayoutFlags="All" AbsoluteLayout.LayoutBounds="1, 1, 1, 1" Margin="0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="30" />
+                    <RowDefinition Height="30" />
+                </Grid.RowDefinitions>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+                <Label x:Name="SpeedLabel" HorizontalTextAlignment="Center" TextColor="Black" Grid.Column="0" Grid.Row="1" FontSize="Title" Text="속도: "></Label>
+                <Label x:Name="TimeLabel" HorizontalTextAlignment="Center" TextColor="Black" Grid.Column="0" Grid.Row="2" FontSize="Title" Text="현재: AM 00:00, 경과: 0분"></Label>
+            </Grid>
+        </AbsoluteLayout>
     </ContentPage.Content>
 </ContentPage>

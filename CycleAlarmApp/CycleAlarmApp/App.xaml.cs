@@ -2,7 +2,7 @@
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace CycleAlarmApp
+namespace BLINK
 {
     public partial class App : Application
     {

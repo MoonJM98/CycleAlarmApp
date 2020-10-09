@@ -1,6 +1,6 @@
 ﻿namespace CycleAlarmApp.Droid
 {
-    public static class Constants
+    public static class BLINK
     {
         public const int MESSAGE_STATE_CHANGE = 1;
         public const int MESSAGE_READ = 2;

@@ -1,4 +1,4 @@
-﻿namespace CycleAlarmApp.Droid.Controller
+﻿namespace BLINK.Droid.Controller
 {
     public enum BluetoothState
     {

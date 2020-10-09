@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Xamarin.Forms;
 
-namespace CycleAlarmApp.Interface
+namespace BLINK.Interface
 {
     public interface IMenuPage
     {

@@ -4,7 +4,7 @@ using Android.Content;
 using Android.OS;
 using Android.Util;
 using Android.Widget;
-using CycleAlarmApp.Interface;
+using BLINK.Interface;
 using Java.Lang;
 using Java.Util;
 using System;
@@ -14,11 +14,11 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 
-[assembly: Xamarin.Forms.Dependency(typeof(CycleAlarmApp.Droid.Controller.Bluetooth))]
-namespace CycleAlarmApp.Droid.Controller
+[assembly: Xamarin.Forms.Dependency(typeof(BLINK.Droid.Controller.Bluetooth))]
+namespace BLINK.Droid.Controller
 {
     [Activity(Label = "Bluetooth")]
-    public class Bluetooth : Activity, IMenuPage, ISettingMenu
+    public class Bluetooth : Activity, IMenuPage
     {
         public static Bluetooth Singleton = null;
         private readonly BluetoothAdapter adapter = BluetoothAdapter.DefaultAdapter;
@@ -71,6 +71,7 @@ namespace CycleAlarmApp.Droid.Controller
                 Log.Error("BLINK", "Bluetooth Error!", e);
             }
         }
+
         public bool Start()
         {
             try
@@ -78,12 +79,11 @@ namespace CycleAlarmApp.Droid.Controller
                 if (BlinkDevices.Any())
                 {
                     BluetoothDevice device = BlinkDevices.First();
-
                     if(!Connect(adapter.GetRemoteDevice(device.Address)))
                     {
                         return false;
                     }
-
+                    
                     Sensors.Start();
                     
                     return true;
@@ -234,39 +234,6 @@ namespace CycleAlarmApp.Droid.Controller
         private void ConnectionFailed()
         {
             State = BluetoothState.Listen;
-        }
-
-        public void SetThreshold(float threshold)
-        {
-            Sensors.AccelThreshold = threshold;
-            Log.Debug(Name, $"Set AccelThreshold to {threshold}");
-        }
-
-        public void SetCenter(float center)
-        {
-            Sensors.Center = center;
-            Log.Debug(Name, $"Set Center to {center}");
-        }
-
-        public float GetThreshold()
-        {
-            return Sensors.AccelThreshold;
-        }
-
-        public float GetCenter()
-        {
-            return Sensors.Center;
-        }
-
-        public void SetBreak(float threshold)
-        {
-            Sensors.BreakThreshold = threshold;
-            Log.Debug(Name, $"Set Break to {threshold}");
-        }
-
-        public float GetBreak()
-        {
-            return Sensors.BreakThreshold;
         }
 
         class CallbackObject
