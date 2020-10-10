@@ -69,7 +69,6 @@ namespace BLINK
                     SpeedLabel.Text = $"속도: {loc.Speed ?? 0:0.##}km/h, 평균: {avgSpeed:0.##}km/h, 거리: {totalDistance:0.##}km";
                     TimeLabel.Text = $"현재: {DateTime.Now:tt h:mm}, 경과: " + (sw.Elapsed.Hours > 0 ? $"{sw.Elapsed.Hours}시간 {sw.Elapsed.Minutes}분" : $"{sw.Elapsed.Minutes}분");
                     map.MoveToRegion(MapSpan.FromCenterAndRadius(new Position(loc.Latitude, loc.Longitude), Distance.FromMeters(100)));
-                    map.RotateTo(Degree);
                 });
                 prevLocation = loc;
                 Thread.Sleep(1000);

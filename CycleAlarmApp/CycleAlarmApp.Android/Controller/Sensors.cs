@@ -31,17 +31,18 @@ namespace BLINK.Droid.Controller
 
         public Sensors()
         {
-
         }
-        public Sensors(Bluetooth bluetooth)
+        public Sensors(Bluetooth bluetooth) : base()
         {
             if (Singleton != null)
             {
-                thread = new Thread(TickChecker);
-                Accelerometer.ReadingChanged += AcceleroChanged;
-                Compass.ReadingChanged += CompassChanged;
-                Bluetooth = bluetooth;
+                Singleton.Dispose();
             }
+
+            thread = new Thread(TickChecker);
+            Accelerometer.ReadingChanged += AcceleroChanged;
+            Compass.ReadingChanged += CompassChanged;
+            Bluetooth = bluetooth;
         }
 
         private void CompassChanged(object sender, CompassChangedEventArgs e)
@@ -55,12 +56,13 @@ namespace BLINK.Droid.Controller
             {
                 Accelerometer.Start(speed);
             }
+
             if (!thread.IsAlive)
             {
                 thread.Start();
             }
 
-            if(!Compass.IsMonitoring)
+            if (!Compass.IsMonitoring)
             {
                 Compass.Start(speed, true);
             }

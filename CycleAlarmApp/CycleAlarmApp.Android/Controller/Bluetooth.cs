@@ -83,8 +83,16 @@ namespace BLINK.Droid.Controller
                     {
                         return false;
                     }
-                    
-                    Sensors.Start();
+
+                    try
+                    {
+                        Sensors.Start();
+                    } catch (System.Exception e)
+                    {
+                        ShowToast($"센서를 불러오는 도중 오류가 발생했습니다.");
+                        Log.Debug(Name, "Sensor Failed {0}", e);
+                        return false;
+                    }
                     
                     return true;
                 }
